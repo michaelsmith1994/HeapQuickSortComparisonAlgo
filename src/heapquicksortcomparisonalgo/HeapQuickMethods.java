@@ -9,17 +9,17 @@ static void quickSort(int[] array, int low, int high)
 {
     if (low < high) 
     {   //partition
-        int ptn = partition(array, low, high);  
+        int ptn = partition(array, low, high); //pivot method call
         quickSort(array, low, ptn - 1);
         quickSort(array, ptn + 1, high);
     }
 }
 
 
-//partition used in quick sort
+//pivot point or partition used in quick sort
 static int partition(int[] array, int low, int high)
 {     
-    int pivot = array[high];      
+    int pivot = medianOfThreePivot(array, low, high);
     int i = (low - 1);  
     for(int j = low; j <= high - 1; j++)
     {
@@ -33,6 +33,19 @@ static int partition(int[] array, int low, int high)
     swap(array, i + 1, high);
     return (i + 1);
 }
+
+//improved pivot point selection
+static int medianOfThreePivot(int[] array, int low, int high) {
+    int mid = low + (high - low) / 2;
+    if (array[mid] < array[low])
+        swap(array, low, mid);
+    if (array[high] < array[low])
+        swap(array, low, high);
+    if (array[mid] < array[high])
+        swap(array, mid, high);
+    return array[high];
+}
+
 
 //array swap method (needed for both sort and partition methods)
 static void swap(int[] array, int i, int j)
